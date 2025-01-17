@@ -1,275 +1,927 @@
----
-title: "Pixel Perfect Websites | Code Stitch Web Designs | Denver, CO"
-description: "Meta description for the page"
-preloadImg: "/assets/images/landing.jpg"
-permalink: "/"
-tags: "sitemap" # Sitemap will use all pages in content/, due to content.json. As index.html is not included in content/ we need to manually add the sitemap tag to this page (only).
-eleventyNavigation:
-  key: Home
-  order: 100
----
+<!-- A fully fleshed-out <head>, dynamically changing based on client.json and the page front matter -->
 
-{% extends "layouts/base.html" %} {% block head %}
-<link rel="stylesheet" href="/assets/css/local.css" />
-<link rel="stylesheet" href="/assets/css/critical.css" />
-
-<!-- Script for Netlify Identity -->
-<script
-  defer
-  src="https://identity.netlify.com/v1/netlify-identity-widget.js"
-></script>
-<script defer>
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", (user) => {
-      if (!user) {
-        window.netlifyIdentity.on("login", () => {
-          document.location.href = "/admin/";
-        });
-      }
-    });
-  }
-</script>
-
-<!-- JSON Schema Markup -->
-<script type="application/ld+json">
-  {
-      "@context": "http://schema.org",
-      "@type": "LocalBusiness",
-      "name": "{{ client.name }}",
-      {% if preloadImg %}"image": "{{ preloadImg }}",{% endif %}
-      {% if client.phoneFormatted %}"telephone": "{{ client.phoneFormatted }}",{% endif %}
-      {% if client.email %}"email": "{{ client.email }}",{% endif %}
-      {% if client.address %}
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <!-- Standard meta tags -->
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta name="description" content="Meta description for the page" />
+      <meta name="keywords" content="" />
+      <link rel="canonical" href="https://www.example.com/" />
+  
+      <!--Social Media Display-->
+      <meta
+        property="og:title"
+        content="Pixel Perfect Websites | Code Stitch Web Designs | Denver, CO"
+      />
+      <meta property="og:description" content="Meta description for the page" />
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="https://www.example.com/" />
+      <meta property="og:image" content="/assets/images/logo-small.png" />
+      <meta
+        property="og:image:secure_url"
+        content="/assets/images/logo-small.png"
+      />
+  
+      <!--Favicons-->
+      <link
+        rel="apple-touch-icon"
+        sizes="180x180"
+        href="/assets/favicons/apple-touch-icon.png"
+      />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="/assets/favicons/favicon-32x32.png?v1"
+      />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="16x16"
+        href="/assets/favicons/favicon-16x16.png"
+      />
+      <link rel="manifest" href="/assets/favicons/site.webmanifest" />
+      <meta name="msapplication-TileColor" content="#da532c" />
+      <meta name="theme-color" content="#ffffff" />
+  
+      <!-- Preloads -->
+      <link rel="preload" as="image" href="/assets/svgs/logo-white.svg" />
+      <link
+        rel="preload"
+        as="font"
+        type="font/woff2"
+        href="/assets/fonts/roboto-v29-latin-regular.woff2"
+        crossorigin
+      />
+      <link
+        rel="preload"
+        as="font"
+        type="font/woff2"
+        href="/assets/fonts/roboto-v29-latin-700.woff2"
+        crossorigin
+      />
+  
+      <!-- Preload an image - tag not rendered if preloadImg is blank to stop console errors -->
+  
+      <link rel="preload" as="image" href="/assets/images/landing.jpg" />
+  
+      <!-- Sitewide Stylesheets and Scripts -->
+      <link rel="stylesheet" href="/assets/css/root.css" />
+      <link rel="stylesheet" href="/assets/css/dark.css" />
+      <script defer src="/assets/js/dark.js"></script>
+      <script defer src="/assets/js/nav.js"></script>
+  
+      <link rel="stylesheet" href="/assets/css/local.css" />
+      <link rel="stylesheet" href="/assets/css/critical.css" />
+  
+      <!-- Script for Netlify Identity -->
+      <script
+        defer
+        src="https://identity.netlify.com/v1/netlify-identity-widget.js"
+      ></script>
+      <script defer>
+        if (window.netlifyIdentity) {
+          window.netlifyIdentity.on("init", (user) => {
+            if (!user) {
+              window.netlifyIdentity.on("login", () => {
+                document.location.href = "/admin/";
+              });
+            }
+          });
+        }
+      </script>
+  
+      <!-- JSON Schema Markup -->
+      <script type="application/ld+json">
+        {
+          "@context": "http://schema.org",
+          "@type": "LocalBusiness",
+          "name": "Code Stitch Web Designs",
+          "image": "/assets/images/landing.jpg",
+          "telephone": "(555) 779-4407",
+          "email": "help@codestitch.app",
+  
           "address": {
-              "@type": "PostalAddress"{% if client.address.lineOne %},
-                  "streetAddress": "{{ client.address.lineOne }}{% if client.address.lineTwo %}, {{ client.address.lineTwo }}{% endif %}"
-              {% endif %}
-              {% if client.address.city %},
-                  "addressLocality": "{{ client.address.city }}"
-              {% endif %}
-              {% if client.address.state %},
-                  "addressRegion": "{{ client.address.state }}"
-              {% endif %}
-              {% if client.address.zip %},
-                  "postalCode": "{{ client.address.zip }}"
-              {% endif %}
-              {% if client.address.country %},
-                  "addressCountry": "{{ client.address.country }}"
-              {% endif %}
+            "@type": "PostalAddress",
+            "streetAddress": "First Address Line, Second Address Line",
+  
+            "addressLocality": "Denver",
+  
+            "addressRegion": "CO",
+  
+            "postalCode": "80206",
+  
+            "addressCountry": "US"
           },
-      {% endif %}
-      {% if client.domain and page.url %}"url": "{{ client.domain }}{{ page.url }}",{% endif %}
-      {% if client.socials %}
-          "sameAs": [{% for platform, url in client.socials %}
-                  {% if not loop.first %},{% endif %}
-                  "{{ url }}"
-              {% endfor %}]
-      {% endif %}
-  }
-</script>
-{% endblock %} {% block body %}
-<!-- ============================================ -->
-<!--                    Hero                      -->
-<!-- ============================================ -->
-
-<section id="hero-2274">
-  <div class="cs-container">
-    <div class="cs-content">
-      <h1 class="cs-title">We're Building For Better Futures</h1>
-      <p class="cs-text">
-        In our relentless pursuit of progress, we are dedicated to constructing
-        a future where innovation, sustainability, and inclusivity converge
-        seamlessly.
-      </p>
-      <a href="" class="cs-button-solid">
-        Get Started Today
-        <img
-          class="cs-button-arrow"
-          src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/white-arrow-up.svg"
-          decoding="async"
-          alt="arrow"
-          width="20"
-          height="20"
-          aria-hidden="true"
-        />
-      </a>
-    </div>
-    <!--To make your own background crops of people use https://www.remove.bg/-->
-    <picture class="cs-picture">
-      <source media="(max-width: 600px)" srcset="/assets/images/ceo-fr.png" />
-      <source media="(min-width: 601px)" srcset="/assets/images/ceo-fr.png" />
-      <img
-        aria-hidden="true"
-        decoding="async"
-        src="/assets/images/ceo-fr.png"
-        alt="construction worker"
-        width="581"
-        height="662"
-      />
-    </picture>
-  </div>
-  <div class="cs-image-group">
-    <!--Left Image-->
-    <picture class="cs-background cs-background1">
-      <source
-        media="(max-width: 600px)"
-        srcset="
-          https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/construction2.jpg
-        "
-      />
-      <source
-        media="(min-width: 601px)"
-        srcset="
-          https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/construction2.jpg
-        "
-      />
-      <img
-        aria-hidden="true"
-        decoding="async"
-        src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/construction2.jpg"
-        alt="construction site"
-        width="1290"
-        height="684"
-      />
-    </picture>
-    <!--Right Image-->
-    <picture class="cs-background cs-background2">
-      <source
-        media="(max-width: 600px)"
-        srcset="
-          https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/construction1.jpg
-        "
-      />
-      <source
-        media="(min-width: 601px)"
-        srcset="
-          https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/construction1.jpg
-        "
-      />
-      <img
-        aria-hidden="true"
-        decoding="async"
-        src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/construction1.jpg"
-        alt="construction site"
-        width="630"
-        height="684"
-      />
-    </picture>
-  </div>
-</section>
-
-<!-- ============================================ -->
-<!--                  Services                    -->
-<!-- ============================================ -->
-
-<section id="Hservices-2274">
-  <div class="cs-container">
-    <ul class="cs-card-group">
-      <li class="cs-item">
-        <a href="" class="cs-link">
-          <img
-            class="cs-icon"
-            src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/construction1.svg"
-            decoding="async"
-            alt="icon"
-            width="40"
-            height="40"
-            aria-hidden="true"
-          />
-          <h3 class="cs-h3">Best House Renovation</h3>
-          <p class="cs-item-text">
-            Transform your home with trendy flooring and finishes!
-          </p>
-        </a>
-      </li>
-      <li class="cs-item">
-        <a href="" class="cs-link">
-          <img
-            class="cs-icon"
-            src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/construction2.svg"
-            decoding="async"
-            alt="icon"
-            width="40"
-            height="40"
-            aria-hidden="true"
-          />
-          <h3 class="cs-h3">Quality Always Matters</h3>
-          <p class="cs-item-text">
-            Quality renovations provide lasting beauty and functionality.
-          </p>
-        </a>
-      </li>
-      <li class="cs-item">
-        <a href="" class="cs-link">
-          <img
-            class="cs-icon"
-            src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/construction3.svg"
-            decoding="async"
-            alt="icon"
-            width="40"
-            height="40"
-            aria-hidden="true"
-          />
-          <h3 class="cs-h3">Effective Teamwork</h3>
-          <p class="cs-item-text">
-            Collaboration drives success through shared goals and communication.
-          </p>
-        </a>
-      </li>
-      <li class="cs-item">
-        <a href="" class="cs-link">
-          <img
-            class="cs-icon"
-            src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/construction4.svg"
-            decoding="async"
-            alt="icon"
-            width="40"
-            height="40"
-            aria-hidden="true"
-          />
-          <span class="cs-number">3K+</span>
-          <h3 class="cs-h3">Happy Customers</h3>
-          <p class="cs-item-text">
-            With more than 7 years of expertise we served our clients.
-          </p>
-          <span class="cs-fake-link">
-            Let's Work Together
+  
+          "url": "https://www.example.com/",
+  
+          "sameAs": ["https://www.facebook.com/", "https://www.instagram.com/"]
+        }
+      </script>
+  
+      <title>Pixel Perfect Websites | Code Stitch Web Designs | Denver, CO</title>
+    </head>
+    <body>
+      <!--Screen reader skip main nav-->
+      <a class="skip" aria-label="skip to main content" href="#main" tabindex="1"
+        >Click To Skip To Main Content</a
+      >
+  
+      <!-- ============================================ -->
+      <!--                 Navigation                   -->
+      <!-- ============================================ -->
+  
+      <header id="cs-navigation">
+        <div class="cs-container">
+          <!--Nav Logo-->
+          <a href="/" class="cs-logo" aria-label="back to home" tabindex="2">
             <img
-              class="cs-arrow"
-              src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/orange-arrow-up.svg"
-              decoding="async"
-              alt="arrow"
-              width="20"
-              height="20"
+              src="/assets/svgs/logo-black.svg"
+              alt=""
+              width="210"
+              height="29"
               aria-hidden="true"
+              decoding="async"
             />
-          </span>
-          <picture class="cs-background">
+          </a>
+          <!--Navigation List-->
+          <nav class="cs-nav" role="navigation">
+            <!--Mobile Nav Toggle-->
+            <button
+              class="cs-toggle"
+              id="mobile-menu-toggle"
+              aria-expanded="false"
+              aria-controls="cs-expanded-ul"
+              aria-label="mobile menu toggle"
+              tabindex="4"
+            >
+              <div class="cs-box" aria-hidden="true">
+                <span class="cs-line cs-line1" aria-hidden="true"></span>
+                <span class="cs-line cs-line2" aria-hidden="true"></span>
+                <span class="cs-line cs-line3" aria-hidden="true"></span>
+              </div>
+            </button>
+            <!-- We need a wrapper div so we can set a fixed height on the cs-ul in case the nav list gets too long from too many dropdowns being opened and needs to have an overflow scroll. This wrapper acts as the background so it can go the full height of the screen and not cut off any overflowing nav items while the cs-ul stops short of the bottom of the screen, which keeps all nav items in view no matter how mnay there are-->
+  
+            <div class="cs-ul-wrapper">
+              <ul id="cs-expanded" class="cs-ul">
+                <li class="cs-li">
+                  <a href="/" class="cs-li-link cs-active" aria-current="page">
+                    Home
+                  </a>
+                </li>
+  
+                <li class="cs-li">
+                  <a href="/about/" class="cs-li-link"> About Us </a>
+                </li>
+  
+                <li class="cs-li cs-dropdown">
+                  <button
+                    class="cs-li-link cs-dropdown-button"
+                    aria-expanded="false"
+                    aria-controls="dropdown-Projects"
+                    aria-label="dropdown-Projects"
+                  >
+                    Projects
+                    <img
+                      class="cs-drop-icon"
+                      src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons%2Fdown.svg"
+                      alt="dropdown icon"
+                      width="15"
+                      height="15"
+                      decoding="async"
+                      aria-hidden="true"
+                    />
+                  </button>
+  
+                  <ul class="cs-drop-ul" id="dropdown-Projects">
+                    <li class="cs-drop-li">
+                      <a href="/project-one/" class="cs-li-link cs-drop-link"
+                        >Unify Budget Friendly</a
+                      >
+                    </li>
+                    <li class="cs-drop-li">
+                      <a href="/project-two/" class="cs-li-link cs-drop-link"
+                        >Unify Premium</a
+                      >
+                    </li>
+                    <li class="cs-drop-li">
+                      <a href="/project-three/" class="cs-li-link cs-drop-link"
+                        >Cisco Budget Friendly</a
+                      >
+                    </li>
+                    <li class="cs-drop-li">
+                      <a href="/project-four/" class="cs-li-link cs-drop-link"
+                        >Cisco Premium</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+  
+                <li class="cs-li">
+                  <a href="/reviews/" class="cs-li-link"> Reviews </a>
+                </li>
+  
+                <li class="cs-li">
+                  <a href="/blog/" class="cs-li-link"> Services </a>
+                </li>
+  
+                <li class="cs-li cs-hide-on-desktop">
+                  <a href="/contact/" class="cs-li-link"> Contact Us </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <a href="/contact" class="cs-button-solid cs-nav-button">Contact Us</a>
+          <!--Dark Mode toggle, uncomment button code if you want to enable a dark mode toggle-->
+          <button
+            id="dark-mode-toggle"
+            aria-label="dark mode toggle"
+            tabindex="3"
+          >
+            <svg
+              class="cs-moon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 480 480"
+              style="enable-background: new 0 0 480 480"
+              xml:space="preserve"
+            >
+              <path
+                d="M459.782 347.328c-4.288-5.28-11.488-7.232-17.824-4.96-17.76 6.368-37.024 9.632-57.312 9.632-97.056 0-176-78.976-176-176 0-58.4 28.832-112.768 77.12-145.472 5.472-3.712 8.096-10.4 6.624-16.832S285.638 2.4 279.078 1.44C271.59.352 264.134 0 256.646 0c-132.352 0-240 107.648-240 240s107.648 240 240 240c84 0 160.416-42.688 204.352-114.176 3.552-5.792 3.04-13.184-1.216-18.496z"
+              />
+            </svg>
+            <img
+              class="cs-sun"
+              aria-hidden="true"
+              src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons%2Fsun.svg"
+              decoding="async"
+              alt="moon"
+              width="15"
+              height="15"
+            />
+          </button>
+        </div>
+      </header>
+      <main id="main">
+        <!-- ============================================ -->
+        <!--                    Hero                      -->
+        <!-- ============================================ -->
+  
+        <section id="hero-2274">
+          <div class="cs-container">
+            <div class="cs-content">
+              <h1 class="cs-title">Linking Ideas, Connecting Futures.</h1>
+              <p class="cs-text">
+                We specialize in innovative networking solutions that bridge gaps
+                and empower businesses. Our designs seamlessly connect systems,
+                enhance performance, and future-proof your infrastructure—turning
+                ideas into reliable connections for tomorrow’s success.
+              </p>
+              <a href="/blog/" class="cs-button-solid">
+                Get Started Today
+                <img
+                  class="cs-button-arrow"
+                  src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/white-arrow-up.svg"
+                  decoding="async"
+                  alt="arrow"
+                  width="20"
+                  height="20"
+                  aria-hidden="true"
+                />
+              </a>
+            </div>
+            <!--To make your own background crops of people use https://www.remove.bg/-->
+            <picture class="cs-picture">
+              <source
+                media="(max-width: 600px)"
+                srcset="/assets/images/ceo-fr.png"
+              />
+              <source
+                media="(min-width: 601px)"
+                srcset="/assets/images/ceo-fr.png"
+              />
+              <img
+                aria-hidden="true"
+                decoding="async"
+                src="/assets/images/ceo-fr.png"
+                alt="construction worker"
+                width="581"
+                height="662"
+              />
+            </picture>
+          </div>
+          <div class="cs-image-group">
+            <!--Left Image-->
+            <picture class="cs-background cs-background1">
+              <source
+                media="(max-width: 600px)"
+                srcset="
+                  https://learn.g2.com/hubfs/G2CM_FI152_Learn_Article_Images_%5Bwhat_is_a_network%5D_V1a.png
+                "
+              />
+              <source
+                media="(min-width: 601px)"
+                srcset="
+                  https://learn.g2.com/hubfs/G2CM_FI152_Learn_Article_Images_%5Bwhat_is_a_network%5D_V1a.png
+                "
+              />
+              <img
+                aria-hidden="true"
+                decoding="async"
+                src="https://learn.g2.com/hubfs/G2CM_FI152_Learn_Article_Images_%5Bwhat_is_a_network%5D_V1a.png"
+                alt="construction site"
+                width="1290"
+                height="684"
+              />
+            </picture>
+            <!--Right Image-->
+            <picture class="cs-background cs-background2">
+              <source
+                media="(max-width: 600px)"
+                srcset="
+                  https://betanews.com/wp-content/uploads/2023/03/Future-network.png
+                "
+              />
+              <source
+                media="(min-width: 601px)"
+                srcset="
+                  https://betanews.com/wp-content/uploads/2023/03/Future-network.png
+                "
+              />
+              <img
+                aria-hidden="true"
+                decoding="async"
+                src="https://betanews.com/wp-content/uploads/2023/03/Future-network.png"
+                alt="construction site"
+                width="630"
+                height="684"
+              />
+            </picture>
+          </div>
+        </section>
+  
+        <!-- ============================================ -->
+        <!--                  Services                    -->
+        <!-- ============================================ -->
+  
+        <section id="Hservices-2274">
+          <div class="cs-container">
+            <ul class="cs-card-group">
+              <li class="cs-item">
+                <a href="" class="cs-link">
+                  <img
+                    class="cs-icon"
+                    src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/construction1.svg"
+                    decoding="async"
+                    alt="icon"
+                    width="40"
+                    height="40"
+                    aria-hidden="true"
+                  />
+                  <h3 class="cs-h3">Best Networking Renovation</h3>
+                  <p class="cs-item-text">
+                    Build cutting-edge, efficient networks with our comprehensive
+                    renovation services!
+                  </p>
+                </a>
+              </li>
+              <li class="cs-item">
+                <a href="" class="cs-link">
+                  <img
+                    class="cs-icon"
+                    src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/construction2.svg"
+                    decoding="async"
+                    alt="icon"
+                    width="40"
+                    height="40"
+                    aria-hidden="true"
+                  />
+                  <h3 class="cs-h3">Effective Network</h3>
+                  <p class="cs-item-text">
+                    Achieve seamless communication and peak performance with an
+                    effective network designed to meet your unique needs.
+                  </p>
+                </a>
+              </li>
+              <li class="cs-item">
+                <a href="" class="cs-link">
+                  <img
+                    class="cs-icon"
+                    src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/construction3.svg"
+                    decoding="async"
+                    alt="icon"
+                    width="40"
+                    height="40"
+                    aria-hidden="true"
+                  />
+                  <h3 class="cs-h3">Take control</h3>
+                  <p class="cs-item-text">
+                    Eleminate inneficiencies - Perfect your network systems -
+                    Unlock your potential
+                  </p>
+                </a>
+              </li>
+              <li class="cs-item">
+                <a href="/blog" class="cs-link">
+                  <img
+                    class="cs-icon"
+                    src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/construction4.svg"
+                    decoding="async"
+                    alt="icon"
+                    width="40"
+                    height="40"
+                    aria-hidden="true"
+                  />
+                  <span class="cs-number">3K+</span>
+                  <h3 class="cs-h3">Happy Customers</h3>
+                  <p class="cs-item-text">
+                    With more than 7 years of expertise we served our clients.
+                  </p>
+                  <span class="cs-fake-link">
+                    Let's Work Together
+                    <img
+                      class="cs-arrow"
+                      src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/orange-arrow-up.svg"
+                      decoding="async"
+                      alt="arrow"
+                      width="20"
+                      height="20"
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <picture class="cs-background">
+                    <source
+                      media="(max-width: 600px)"
+                      srcset="
+                        https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/construction3.jpg
+                      "
+                    />
+                    <source
+                      media="(min-width: 601px)"
+                      srcset="
+                        https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/construction3.jpg
+                      "
+                    />
+                    <img
+                      aria-hidden="true"
+                      decoding="async"
+                      src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/construction3.jpg"
+                      alt="construction site"
+                      width="630"
+                      height="684"
+                    />
+                  </picture>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </section>
+        <!-- ============================================ -->
+        <!--                Meet The Team                 -->
+        <!-- ============================================ -->
+  
+        <section id="meet-team-977">
+          <div class="cs-container">
+            <div class="cs-content">
+              <span class="cs-topper">Our Team</span>
+              <h2 class="cs-title">Our Expert Team Members</h2>
+              <p class="cs-text">
+                At Polar Solution, we are dedicated to delivering top-tier network
+                design solutions tailored to every client’s needs. Meet the
+                experts who make seamless connectivity a reality.
+              </p>
+            </div>
+            <ul class="cs-card-group">
+              <li class="cs-item">
+                <picture class="cs-picture">
+                  <!--Mobile Image-->
+                  <source
+                    media="(max-width: 600px)"
+                    srcset="
+                      https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/stylist1.jpg
+                    "
+                  />
+                  <!--Tablet and above Image-->
+                  <source
+                    media="(min-width: 601px)"
+                    srcset="
+                      https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/stylist1.jpg
+                    "
+                  />
+                  <img
+                    loading="lazy"
+                    decoding="async"
+                    src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/stylist1.jpg"
+                    alt="stylist"
+                    width="320"
+                    height="400"
+                  />
+                </picture>
+                <div class="cs-info">
+                  <span class="cs-name">Esther Howard</span>
+                  <span class="cs-job">Hair Expert</span>
+                  <div class="cs-social-group">
+                    <a href="" class="cs-link" aria-label="visit linkedin">
+                      <img
+                        class="cs-icon"
+                        loading="lazy"
+                        decoding="async"
+                        src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/linkedin-gold.svg"
+                        alt="linkedin"
+                        width="12"
+                        height="12"
+                      />
+                    </a>
+                    <a href="" class="cs-link" aria-label="visit twitter">
+                      <img
+                        class="cs-icon"
+                        loading="lazy"
+                        decoding="async"
+                        src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/twitter-gold.svg"
+                        alt="twitter"
+                        width="12"
+                        height="12"
+                      />
+                    </a>
+                    <a href="" class="cs-link" aria-label="visit instragram">
+                      <img
+                        class="cs-icon"
+                        loading="lazy"
+                        decoding="async"
+                        src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/instagram-gold.svg"
+                        alt="instragram"
+                        width="12"
+                        height="12"
+                      />
+                    </a>
+                    <a href="" class="cs-link" aria-label="visit youtube">
+                      <img
+                        class="cs-icon"
+                        loading="lazy"
+                        decoding="async"
+                        src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/youtube-gold.svg"
+                        alt="youtube"
+                        width="12"
+                        height="12"
+                      />
+                    </a>
+                  </div>
+                </div>
+              </li>
+              <li class="cs-item">
+                <picture class="cs-picture">
+                  <!--Mobile Image-->
+                  <source
+                    media="(max-width: 600px)"
+                    srcset="
+                      https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/stylist2.jpg
+                    "
+                  />
+                  <!--Tablet and above Image-->
+                  <source
+                    media="(min-width: 601px)"
+                    srcset="
+                      https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/stylist2.jpg
+                    "
+                  />
+                  <img
+                    loading="lazy"
+                    decoding="async"
+                    src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/stylist2.jpg"
+                    alt="stylist"
+                    width="320"
+                    height="400"
+                  />
+                </picture>
+                <div class="cs-info">
+                  <span class="cs-name">Jenny Wilson</span>
+                  <span class="cs-job">Hair Expert</span>
+                  <div class="cs-social-group">
+                    <a href="" class="cs-link" aria-label="visit linkedin">
+                      <img
+                        img
+                        class="cs-icon"
+                        loading="lazy"
+                        decoding="async"
+                        src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/linkedin-gold.svg"
+                        alt="linkedin"
+                        width="12"
+                        height="12"
+                      />
+                    </a>
+                    <a href="" class="cs-link" aria-label="visit twitter">
+                      <img
+                        img
+                        class="cs-icon"
+                        loading="lazy"
+                        decoding="async"
+                        src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/twitter-gold.svg"
+                        alt="twitter"
+                        width="12"
+                        height="12"
+                      />
+                    </a>
+                    <a href="" class="cs-link" aria-label="visit instragram">
+                      <img
+                        img
+                        class="cs-icon"
+                        loading="lazy"
+                        decoding="async"
+                        src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/instagram-gold.svg"
+                        alt="instragram"
+                        width="12"
+                        height="12"
+                      />
+                    </a>
+                    <a href="" class="cs-link" aria-label="visit youtube">
+                      <img
+                        img
+                        class="cs-icon"
+                        loading="lazy"
+                        decoding="async"
+                        src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/youtube-gold.svg"
+                        alt="youtube"
+                        width="12"
+                        height="12"
+                      />
+                    </a>
+                  </div>
+                </div>
+              </li>
+              <li class="cs-item">
+                <picture class="cs-picture">
+                  <!--Mobile Image-->
+                  <source
+                    media="(max-width: 600px)"
+                    srcset="
+                      https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/stylist3.jpg
+                    "
+                  />
+                  <!--Tablet and above Image-->
+                  <source
+                    media="(min-width: 601px)"
+                    srcset="
+                      https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/stylist3.jpg
+                    "
+                  />
+                  <img
+                    loading="lazy"
+                    decoding="async"
+                    src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/stylist3.jpg"
+                    alt="stylist"
+                    width="320"
+                    height="400"
+                  />
+                </picture>
+                <div class="cs-info">
+                  <span class="cs-name">Leslie Alexander</span>
+                  <span class="cs-job">Hair Expert</span>
+                  <div class="cs-social-group">
+                    <a href="" class="cs-link" aria-label="visit linkedin">
+                      <img
+                        img
+                        class="cs-icon"
+                        loading="lazy"
+                        decoding="async"
+                        src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/linkedin-gold.svg"
+                        alt="linkedin"
+                        width="12"
+                        height="12"
+                      />
+                    </a>
+                    <a href="" class="cs-link" aria-label="visit twitter">
+                      <img
+                        img
+                        class="cs-icon"
+                        loading="lazy"
+                        decoding="async"
+                        src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/twitter-gold.svg"
+                        alt="twitter"
+                        width="12"
+                        height="12"
+                      />
+                    </a>
+                    <a href="" class="cs-link" aria-label="visit instragram">
+                      <img
+                        img
+                        class="cs-icon"
+                        loading="lazy"
+                        decoding="async"
+                        src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/instagram-gold.svg"
+                        alt="instragram"
+                        width="12"
+                        height="12"
+                      />
+                    </a>
+                    <a href="" class="cs-link" aria-label="visit youtube">
+                      <img
+                        img
+                        class="cs-icon"
+                        loading="lazy"
+                        decoding="async"
+                        src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/youtube-gold.svg"
+                        alt="youtube"
+                        width="12"
+                        height="12"
+                      />
+                    </a>
+                  </div>
+                </div>
+              </li>
+              <li class="cs-item">
+                <picture class="cs-picture">
+                  <!--Mobile Image-->
+                  <source
+                    media="(max-width: 600px)"
+                    srcset="
+                      https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/stylist4.jpg
+                    "
+                  />
+                  <!--Tablet and above Image-->
+                  <source
+                    media="(min-width: 601px)"
+                    srcset="
+                      https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/stylist4.jpg
+                    "
+                  />
+                  <img
+                    loading="lazy"
+                    decoding="async"
+                    src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/stylist4.jpg"
+                    alt="stylist"
+                    width="320"
+                    height="400"
+                  />
+                </picture>
+                <div class="cs-info">
+                  <span class="cs-name">Jane Cooper</span>
+                  <span class="cs-job">Hair Expert</span>
+                  <div class="cs-social-group">
+                    <a href="" class="cs-link" aria-label="visit linkedin">
+                      <img
+                        img
+                        class="cs-icon"
+                        loading="lazy"
+                        decoding="async"
+                        src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/linkedin-gold.svg"
+                        alt="linkedin"
+                        width="12"
+                        height="12"
+                      />
+                    </a>
+                    <a href="" class="cs-link" aria-label="visit twitter">
+                      <img
+                        img
+                        class="cs-icon"
+                        loading="lazy"
+                        decoding="async"
+                        src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/twitter-gold.svg"
+                        alt="twitter"
+                        width="12"
+                        height="12"
+                      />
+                    </a>
+                    <a href="" class="cs-link" aria-label="visit instragram">
+                      <img
+                        img
+                        class="cs-icon"
+                        loading="lazy"
+                        decoding="async"
+                        src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/instagram-gold.svg"
+                        alt="instragram"
+                        width="12"
+                        height="12"
+                      />
+                    </a>
+                    <a href="" class="cs-link" aria-label="visit youtube">
+                      <img
+                        img
+                        class="cs-icon"
+                        loading="lazy"
+                        decoding="async"
+                        src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/youtube-gold.svg"
+                        alt="youtube"
+                        width="12"
+                        height="12"
+                      />
+                    </a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </section>
+  
+        <!-- ============================================ -->
+        <!--             Final Call to Action             -->
+        <!-- ============================================ -->
+  
+        <section id="cta">
+          <div class="container">
+            <h2 class="title">
+              Get It Done
+              <br />
+              With Us Today!
+            </h2>
+            <p>
+              Building seamless connections with innovative networking
+              designs—where performance meets reliability!
+            </p>
+            <a href="/blog" class="cs-button-solid">Get an Estimate Now</a>
+          </div>
+          <picture>
             <source
               media="(max-width: 600px)"
-              srcset="
-                https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/construction3.jpg
-              "
+              srcset="/assets/images/social-network-m.jpg"
             />
             <source
               media="(min-width: 601px)"
-              srcset="
-                https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/construction3.jpg
-              "
+              srcset="/assets/images/social-network.jpg"
             />
             <img
               aria-hidden="true"
               decoding="async"
-              src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/construction3.jpg"
-              alt="construction site"
-              width="630"
-              height="684"
+              src="/assets/images/social-network.jpg"
+              alt="kitchen cabinets"
+              loading="lazy"
+              width="2500"
+              height="1667"
             />
           </picture>
-        </a>
-      </li>
-    </ul>
-  </div>
-</section>
-
-{% include 'components/cta.html' %} {% endblock %}
+        </section>
+      </main>
+  <!-- ============================================ -->
+  <!--                   Footer                     -->
+  <!-- ============================================ -->
+  
+  <footer id="footer">
+    <div class="container">
+      <div class="left-section">
+        <a class="logo" href="/"
+          ><img
+            loading="lazy"
+            decoding="async"
+            src="/assets/svgs/logo-white.svg"
+            alt="logo"
+            width="264"
+            height="78"
+        /></a>
+      </div>
+      <div class="right-section">
+        <div class="lists">
+          <ul>
+            <li>
+              <h2>Information</h2>
+            </li>
+            <li>
+              <a href="/">Home</a>
+            </li>
+            <li>
+              <a href="/about">About Us</a>
+            </li>
+            <li>
+              <a href="/projects">Projects</a>
+            </li>
+            <li>
+              <a href="/reviews">Reviews</a>
+            </li>
+            <li>
+              <a href="/contact">Contact</a>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <h2>Contact</h2>
+            </li>
+            <li>
+              Email us at: help@polarsolutions.com
+  
+              </a>
+            </li>
+            <li>
+              Address: 123 Anywhere St., Any City
+              </li>
+            <li>
+              <a href="tel:{{client.phoneForTel}}">
+                T: +123-456-7890
+              </a>
+            </li>
+            <li>
+              <a href="mailto:{{client.email}}">Click to Email</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  
+    <div class="credit">
+      <span>Designed and Hand Coded by</span>
+      <a href="/" target="_blank" rel="noopener">Polar Solution</a>
+      <span class="copyright"> Copyright {2025} - Present</span>
+    </div>
+  </footer>
+  

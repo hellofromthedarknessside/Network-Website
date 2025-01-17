@@ -23,32 +23,32 @@
   .cs-topper {
     display: block;
     margin-bottom: 0.25rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
     font-size: var(--topperFontSize);
     line-height: 1.2em;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
     font-weight: 700;
     color: var(--primary);
     text-align: inherit;
   }
   .cs-title {
-    position: relative;
-    margin: 0 0 1rem 0;
-    max-width: 43.75rem;
     font-size: var(--headerFontSize);
     line-height: 1.2em;
     font-weight: 900;
-    color: var(--headerColor);
     text-align: inherit;
+    max-width: 43.75rem;
+    margin: 0 0 1rem 0;
+    color: var(--headerColor);
+    position: relative;
   }
   .cs-text {
-    margin: 0;
-    max-width: 40.625rem;
-    width: 100%;
     font-size: var(--bodyFontSize);
     line-height: 1.5em;
-    color: var(--bodyTextColor);
     text-align: inherit;
+    width: 100%;
+    max-width: 40.625rem;
+    margin: 0;
+    color: var(--bodyTextColor);
   }
   .cs-button-solid {
     z-index: 1;
